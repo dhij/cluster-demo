@@ -13,4 +13,5 @@ services:
       dockerfile: ./cmd/userapi/Dockerfile
     ports:
       - "8080:8080"
-    entrypoint: /app/userapi
+    depends_on:
+      - mysql

@@ -28,8 +28,6 @@ func init() {
 func main() {
 	var (
 		dbDriver = "mysql"
-		// "root:password@tcp(localhost:33060)/users_db" if you are running mysql on a container and
-		// "root:password@tcp(mysql:33060)/users_db" if you are running docker-compose
 		dbSource = "root:password@tcp(mysql:3306)/users_db"
 	)
 
