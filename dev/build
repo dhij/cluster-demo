@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -euo pipefail
+set -x
+
+APP=$1
+
+export REGISTRY=${REGISTRY:-registry.digitalocean.com/dhij}
+
+CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o "./cmd/$APP/$APP" "./cmd/$APP"
+
+docker build -t "$REGISTRY/$APP:latest" "./cmd/$APP"
+docker push "$REGISTRY/$APP:latest"
