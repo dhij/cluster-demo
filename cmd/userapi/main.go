@@ -8,6 +8,7 @@ import (
 	"net/http"
 
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/ianschenck/envflag"
 )
 
 type User struct {
@@ -15,23 +16,13 @@ type User struct {
 	Name string `json:"name"`
 }
 
-var users []User
-
-func init() {
-	users = []User{
-		{"1", "David"},
-		{"2", "Brian"},
-		{"3", "Jeff"},
-	}
-}
-
 func main() {
 	var (
+		dbSource = envflag.String("MYSQL_DSN", "root:password@tcp(mysql:3306)/users_db", "address where mysql db is listening")
 		dbDriver = "mysql"
-		dbSource = "root:password@tcp(mysql:3306)/users_db"
 	)
 
-	db, err := sql.Open(dbDriver, dbSource)
+	db, err := sql.Open(dbDriver, *dbSource)
 	if err != nil {
 		log.Fatalf("connecting to MySQL: %s", err)
 	}
