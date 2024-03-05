@@ -8,7 +8,6 @@ export LOGIN=${LOGIN:-root}
 export PASSWORD=${PASSWORD:-password}
 export DATABASE=${DATABASE:-users_db}
 
-echo "$HOST"
 docker_cmd=(docker run -it --rm --network host --volume "$(pwd)/db:/db" migrate/migrate:v4.17.0)
 
 if [ "${1:-}" == "create" ]; then
