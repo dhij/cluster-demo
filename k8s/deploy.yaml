@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: userapi
+  labels:
+    app: userapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: userapi
+  template:
+    metadata:
+      labels:
+        app: userapi
+    spec:
+      containers:
+      - name: userapi
+        image: registry.digitalocean.com/dhij/userapi:latest
+        ports:
+        - containerPort: 8080
+        env:
+            - name: MYSQL_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: my-app-db-private-connection
+                  key: host
+            - name: MYSQL_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: my-app-db-private-connection
+                  key: port
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: my-app-db-private-connection
+                  key: database
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: my-app-db-default-credentials
+                  key: username
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: my-app-db-default-credentials
+                  key: password

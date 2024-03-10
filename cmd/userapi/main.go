@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 
@@ -18,16 +19,22 @@ type User struct {
 
 func main() {
 	var (
-		dbSource = envflag.String("MYSQL_DSN", "root:password@tcp(mysql:3306)/users_db", "address where mysql db is listening")
+		login    = envflag.String("MYSQL_USER", "root", "address where mysql db is listening")
+		password = envflag.String("MYSQL_PASSWORD", "password", "address where mysql db is listening")
+		host     = envflag.String("MYSQL_HOST", "localhost", "address where mysql db is listening")
+		port     = envflag.String("MYSQL_PORT", "3306", "address where mysql db is listening")
+		database = envflag.String("MYSQL_DATABASE", "defaultdb", "address where mysql db is listening")
 		dbDriver = "mysql"
 	)
+	envflag.Parse()
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", *login, *password, *host, *port, *database)
 
-	db, err := sql.Open(dbDriver, *dbSource)
+	db, err := sql.Open(dbDriver, dsn)
 	if err != nil {
 		log.Fatalf("connecting to MySQL: %s", err)
 	}
 	defer db.Close()
-	log.Print("successfully connected to MySQL")
+	log.Println("successfully connected to MySQL")
 
 	uh := userHandler{
 		ctx: context.Background(),
