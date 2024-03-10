@@ -1,1 +1,3 @@
 dev/variables
+k8s/secret.yaml
+k8s/database_cluster.yaml
