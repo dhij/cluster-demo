@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: userapi-svc
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  tls:
+  - hosts:
+    - cluster-demo.live
+    secretName: userapi-tls
+  ingressClassName: nginx
+  rules:
+  - host: cluster-demo.live
+    http:
+      paths:
+      - path: /api(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: userapi-svc
+            port:
+              number: 80

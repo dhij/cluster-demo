@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: userapi-cert
+  namespace: default
+spec:
+  dnsNames:
+    - cluster-demo.live
+  secretName: userapi-tls
+  issuerRef:
+    name: letsencrypt-issuer
+    kind: ClusterIssuer
