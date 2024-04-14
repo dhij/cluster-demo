@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: userapi-svc
+  name: userapi-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
@@ -14,7 +14,7 @@ spec:
   - host: cluster-demo.live
     http:
       paths:
-      - path: /api(/|$)(.*)
+      - path: /user-api(/|$)(.*)
         pathType: ImplementationSpecific
         backend:
           service:
