@@ -1,11 +1,20 @@
 #!/bin/bash
 
-set -euo pipefail
-set -x
+mkdir -p dev/dist
+buildpids=""
 
-APP=$1
-export REGISTRY=${REGISTRY:-registry.digitalocean.com/dhij}
-CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o "./cmd/$APP/$APP" "./cmd/$APP"
+for f in \
+    userapi \
+    ; do
+    CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o "dev/dist/$f" "./cmd/$f" &
+    buildpids+=" $!"
+done
 
-docker build -t "$REGISTRY/$APP:latest" "./cmd/$APP"
-docker push "$REGISTRY/$APP:latest"
+for pid in $buildpids; do
+    echo "$pid"
+    wait "$pid"
+done
+
+image="dhij.test/cluster-demo:latest"
+docker build -t "$image" -f Dockerfile.dev .
+echo "=> dev image built" > /dev/stderr
