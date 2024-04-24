@@ -1,13 +1,12 @@
 #!/bin/bash
 
 set -e
-eval "$(dev/variables)"
 
-export HOST=${host:-127.0.0.1}
-export PORT=${port:-3306}
-export LOGIN=${login:-root}
-export PASSWORD=${password:-password}
-export DATABASE=${database:-users_db}
+export HOST=${HOST:-127.0.0.1}
+export PORT=${PORT:-3306}
+export LOGIN=${LOGIN:-root}
+export PASSWORD=${PASSWORD:-password}
+export DATABASE=${DATABASE:-cluster_demo}
 
 docker_cmd=(docker run -it --rm --network host --volume "$(pwd)/db:/db" migrate/migrate:v4.17.0)
 echo "host: ${HOST}"

@@ -1,3 +1,4 @@
 dev/variables
+dev/dist
 k8s/secret.yaml
 k8s/database-cluster-reference.yaml
