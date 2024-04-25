@@ -21,9 +21,9 @@ func main() {
 	var (
 		login    = envflag.String("MYSQL_USER", "root", "address where mysql db is listening")
 		password = envflag.String("MYSQL_PASSWORD", "password", "address where mysql db is listening")
-		host     = envflag.String("MYSQL_HOST", "localhost", "address where mysql db is listening")
+		host     = envflag.String("MYSQL_HOST", "mysql", "address where mysql db is listening")
 		port     = envflag.String("MYSQL_PORT", "3306", "address where mysql db is listening")
-		database = envflag.String("MYSQL_DATABASE", "defaultdb", "address where mysql db is listening")
+		database = envflag.String("MYSQL_DATABASE", "cluster_demo", "address where mysql db is listening")
 		dbDriver = "mysql"
 	)
 	envflag.Parse()
