@@ -1,11 +1,11 @@
 version: '3.8'
 networks:
-  cluster-demo:
+  cluster_demo:
     driver: bridge
 services:
   mysql:
     networks:
-      - cluster-demo
+      - cluster_demo
     platform: linux/amd64
     image: mysql:8.0
     ports:
@@ -15,7 +15,7 @@ services:
       MYSQL_DATABASE: cluster_demo
   userapi:
     networks:
-      - cluster-demo
+      - cluster_demo
     hostname: userapi
     image: dhij.test/cluster-demo:latest
     command: "/bin/userapi"
